@@ -5,13 +5,18 @@ pool:
   name: LocalAgentPool
 
 steps:
+
   - task: NodeTool@0
     inputs:
       versionSpec: '18.x'
     displayName: 'Install Node.js'
+    workingDirectory: ../../AgilePM/AgilePM_Frontend
+
 
   - script: npm install
     displayName: 'npm install'
+    workingDirectory: ../../AgilePM/AgilePM_Frontend
+
 
   - task: SonarCloudPrepare@1
     inputs:
@@ -21,12 +26,19 @@ steps:
       configMode: 'manual'
       cliProjectKey: 'jherreraj_Sistema-de-Gestión-de-Proyectos-Agiles'
       cliProjectName: 'Sistema de Gestión de Proyectos Agiles'
+    workingDirectory: ../../AgilePM/AgilePM_Frontend
+
 
   - script: npm run build
     displayName: 'npm run build'
+    workingDirectory: ../../AgilePM/AgilePM_Frontend
+
 
   - task: SonarCloudAnalyze@1
+    workingDirectory: ../../AgilePM/AgilePM_Frontend
+
 
   - task: SonarCloudPublish@1
     inputs:
       pollingTimeoutSec: '300'
+    workingDirectory: ../../AgilePM/AgilePM_Frontend
